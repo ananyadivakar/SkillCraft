@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Interactive Navigation Menu</title>
+  <style>
+    :root {
+      --nav-height: 64px;
+      --bg-default: rgba(255, 255, 255, 0.95);
+      --bg-scrolled: linear-gradient(90deg, #0ea5e9, #7c3aed);
+      --text-default: #111827;
+      --text-scrolled: white;
+      --accent: #0ea5e9;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      color: var(--text-default);
+      background: #f9fafb;
+    }
+
+    header.nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: var(--nav-height);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 1.5rem;
+      background: var(--bg-default);
+      backdrop-filter: blur(6px);
+      transition: background 0.3s ease, color 0.3s ease;
+      z-index: 1000;
+    }
+
+    header.nav.scrolled {
+      background: var(--bg-scrolled);
+      color: var(--text-scrolled);
+    }
+
+    .brand {
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+      margin: 0;
+      padding: 0;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: inherit;
+      padding: 0.5rem 0.75rem;
+      border-radius: 6px;
+      position: relative;
+      transition: all 0.3s ease;
+    }
+
+    nav a:hover {
+      background-color: rgba(14, 165, 233, 0.15);
+      transform: scale(1.05);
+    }
+
+    nav a.active::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      height: 2px;
+      width: 100%;
+      background-color: var(--accent);
+      transition: width 0.3s ease;
+    }
+
+    main {
+      padding-top: 80px;
+    }
+
+    section {
+      min-height: 100vh;
+      padding: 2rem;
+    }
+
+    h1 {
+      margin-bottom: 1rem;
+    }
+
+    p {
+      font-size: 1.1rem;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+
+<header class="nav" id="siteNav">
+  <div class="brand">MySite</div>
+  <nav>
+    <ul id="menuList">
+      <li><a href="#home" class="active">Home</a></li>
+      <li><a href="#features">Features</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main>
+  <section id="home">
+    <h1>Home</h1>
+    <p>Welcome to our interactive site. Scroll down to see the nav bar change.</p>
+  </section>
+  <section id="features">
+    <h1>Features</h1>
+    <p>Explore our tools and tutorials designed to boost your web development skills.</p>
+  </section>
+  <section id="about">
+    <h1>About Us</h1>
+    <p>We help you develop coding skills through immersive projects and hands-on learning.</p>
+  </section>
+  <section id="contact">
+    <h1>Contact</h1>
+    <p>Reach out for collaborations, feedback, or support.</p>
+  </section>
+</main>
+
+<script>
+  const nav = document.getElementById('siteNav');
+  const links = document.querySelectorAll('#menuList a');
+
+  // Change nav style on scroll
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 40) {
+      nav.classList.add('scrolled');
+    } else {
+      nav.classList.remove('scrolled');
+    }
+  });
+
+  // Smooth scroll + active link
+  links.forEach(link => {
+    link.addEventListener('click', e => {
+      e.preventDefault();
+      document.querySelector(link.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
+      links.forEach(l => l.classList.remove('active'));
+      link.classList.add('active');
+    });
+  });
+</script>
+
+</body>
+</html>
