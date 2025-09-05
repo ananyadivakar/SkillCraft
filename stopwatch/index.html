@@ -4,82 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Stopwatch App</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: linear-gradient(135deg, #e90ec5, #7c3aed);
-      color: #fff;
-      margin: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
-      min-height: 100vh;
-      padding: 2rem;
-    }
-
-    h1 {
-      margin-bottom: 1rem;
-    }
-
-    .stopwatch {
-      background: rgba(255, 255, 255, 0.1);
-      padding: 2rem;
-      border-radius: 1rem;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-      text-align: center;
-      width: 320px;
-    }
-
-    .time {
-      font-size: 2.5rem;
-      margin-bottom: 1.5rem;
-      letter-spacing: 1px;
-    }
-
-    .buttons {
-      display: flex;
-      justify-content: space-around;
-      margin-bottom: 1.2rem;
-    }
-
-    button {
-      padding: 0.6rem 1rem;
-      font-size: 1rem;
-      border: none;
-      border-radius: 0.5rem;
-      cursor: pointer;
-      transition: 0.2s;
-    }
-
-    button:hover {
-      transform: scale(1.05);
-    }
-
-    .start { background: #10b981; color: #fff; }
-    .pause { background: #f59e0b; color: #fff; }
-    .reset { background: #ef4444; color: #fff; }
-    .lap   { background: #3b82f6; color: #fff; }
-
-    .laps {
-      max-height: 200px;
-      overflow-y: auto;
-      text-align: left;
-      padding-right: 0.5rem;
-    }
-
-    .laps ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-
-    .laps li {
-      padding: 0.4rem;
-      border-bottom: 1px solid rgba(255,255,255,0.3);
-      font-size: 0.95rem;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
@@ -98,59 +23,6 @@
     </div>
   </div>
 
-  <script>
-    let startTime = 0;
-    let elapsedTime = 0;
-    let timerInterval;
-    const display = document.getElementById("display");
-    const lapsList = document.getElementById("lapsList");
-
-    function formatTime(ms) {
-      const date = new Date(ms);
-      const hours = String(date.getUTCHours()).padStart(2, "0");
-      const minutes = String(date.getUTCMinutes()).padStart(2, "0");
-      const seconds = String(date.getUTCSeconds()).padStart(2, "0");
-      const milliseconds = String(date.getUTCMilliseconds()).padStart(3, "0");
-      return `${hours}:${minutes}:${seconds}.${milliseconds}`;
-    }
-
-    function start() {
-      if (!timerInterval) {
-        startTime = Date.now() - elapsedTime;
-        timerInterval = setInterval(() => {
-          elapsedTime = Date.now() - startTime;
-          display.textContent = formatTime(elapsedTime);
-        }, 10);
-      }
-    }
-
-    function pause() {
-      clearInterval(timerInterval);
-      timerInterval = null;
-    }
-
-    function reset() {
-      clearInterval(timerInterval);
-      timerInterval = null;
-      startTime = 0;
-      elapsedTime = 0;
-      display.textContent = "00:00:00.000";
-      lapsList.innerHTML = "";
-    }
-
-    function lap() {
-      if (elapsedTime > 0) {
-        const li = document.createElement("li");
-        li.textContent = formatTime(elapsedTime);
-        lapsList.appendChild(li);
-      }
-    }
-
-    document.getElementById("startBtn").addEventListener("click", start);
-    document.getElementById("pauseBtn").addEventListener("click", pause);
-    document.getElementById("resetBtn").addEventListener("click", reset);
-    document.getElementById("lapBtn").addEventListener("click", lap);
-  </script>
-
+  <script src="script.js"></script>
 </body>
 </html>
